@@ -8,12 +8,22 @@ import Portfolio from "./components/Portfolio/Portfolio";
 
 import Contact from "./components/Contact/Contact";
 
-import { useContext } from "react";
+import { useContext ,  useState, useEffect } from "react";
 import { themeContext } from "./Context";
 import FooterNew from "./components/FooterNew/FooterNew"
+import Loading from "./components/Loading/Loading"
+import Form from "./components/Form/Form"
+
 function App() {
   const theme = useContext(themeContext);
   const darkMode = theme.state.darkMode;
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    // Simulate loading for 2 seconds
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+  }, []);
   return (
     <div
       className="App"
@@ -22,18 +32,34 @@ function App() {
         color: darkMode ? "white" : "",
       }}
     >
-      <Navbar />
+     {isLoading ? (
+       <Loading  />
+     ) : (
+       <>
+       <Navbar />
       <Intro />
       <Services />
     
       <Works />
       <Portfolio />
+
      
-      <Contact />
+      {/* <Contact /> */}
+      <Form/>
       
       <FooterNew/>
-    </div>
-  );
+       
+      
+    </>
+       
+       // Your application content goes here
+
+     )}
+   </div>
+ );
+
+      
+   
 }
 
 export default App;
